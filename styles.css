@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+input {
+  margin: 5px;
+}
+button {
+  margin-top: 10px;
+}
