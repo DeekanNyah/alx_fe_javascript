@@ -8,11 +8,17 @@
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Display random quote -->
+  <!-- Category Filter -->
+  <label for="categoryFilter">Filter by Category:</label>
+  <select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+  </select>
+
+  <!-- Display Quote -->
   <div id="quoteDisplay" style="margin: 1em 0;"></div>
   <button id="newQuote">Show New Quote</button>
 
-  <!-- Add new quote -->
+  <!-- Add Quote -->
   <h2>Add a Quote</h2>
   <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
   <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
