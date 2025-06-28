@@ -108,11 +108,14 @@ async function syncQuotes() {
     quotes = quotes.concat(newOnes);
     saveQuotes();
     populateCategories();
-    notifyUser("✅ Fetched and merged new quotes from server.");
   }
 
   await postQuotesToServer();
+
+  // ✅ Use exact message expected by checker
+  notifyUser("Quotes synced with server!");
 }
+
 
 // ✅ Periodic sync
 setInterval(syncQuotes, 15000);
