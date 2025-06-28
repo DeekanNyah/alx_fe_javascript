@@ -117,3 +117,48 @@ function filterQuotes() {
   localStorage.setItem('selectedCategory', selectedCategory);
   showRandomQuote(); // Show a quote from the selected category
 }
+// --- Task 3: Server Sync Simulation and Conflict Resolution ---
+
+// Fake sync URL (this could be replaced with a real API in the future)
+const SERVER_URL = 'https://jsonplaceholder.typicode.com/posts';
+
+// Fetch quotes from "server" every 15 seconds
+setInterval(syncWithServer, 15000);
+
+function syncWithServer() {
+  fetch(SERVER_URL)
+    .then(res => res.json())
+    .then(serverData => {
+      // Simulate converting posts to quotes (limit to first 5)
+      const serverQuotes = serverData.slice(0, 5).map(post => ({
+        text: post.title,
+        category: "ServerSync"
+      }));
+
+      const localString = JSON.stringify(quotes.slice(0, 5));
+      const serverString = JSON.stringify(serverQuotes);
+
+      if (localString !== serverString) {
+        quotes = [...quotes, ...serverQuotes];
+        saveQuotes();
+        populateCategories();
+        notifyUser("Quotes synced with server. Server data took precedence.");
+      }
+    })
+    .catch(err => {
+      console.error("Sync failed:", err);
+    });
+}
+
+function notifyUser(message) {
+  const existing = document.getElementById('syncNotification');
+  if (existing) existing.remove();
+
+  const alertBox = document.createElement('div');
+  alertBox.id = 'syncNotification';
+  alertBox.textContent = message;
+  alertBox.style = "background: #ffc; padding: 10px; border: 1px solid #cc0; margin: 10px 0;";
+  document.body.prepend(alertBox);
+
+  setTimeout(() => alertBox.remove(), 5000);
+}
